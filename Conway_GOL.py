@@ -1,30 +1,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-###################################################################################################################################################################
-#This function initializes a grid with random initial states.
-#Parameters:
-#rows: The number of rows in the grid.
-#cols: The number of columns in the grid.
-#Returns:
-#A NumPy array representing the initialized grid with random 0s and 1s.
-###################################################################################################################################################################
-    
+'''
+This function initializes a grid with random initial states.
+Parameters:
+rows: The number of rows in the grid.
+cols: The number of columns in the grid.
+Returns:
+A NumPy array representing the initialized grid with random 0s and 1s.
+''' 
 def initialize_grid(rows, cols):
     return np.random.choice([0, 1], size=(rows, cols))
 
-###################################################################################################################################################################
-#This function updates the grid for each generation based on the rules of Conway's Game of Life.
-#Parameters:
-#frameNum: The current frame number of the animation (unused in the function).
-#img: The image object representing the grid plot.
-#grid: The NumPy array representing the current state of the grid.
-#Returns:
-#The updated image object -> img
-#It computes the next state of the grid based on the rules of Conway's Game of Life, which includes counting the neighbors of each cell and applying the rules to determine whether a cell lives, dies, or becomes alive.
-#The updated grid is then assigned to the image object img, and the function returns it.
-###################################################################################################################################################################
- 
+'''
+This function updates the grid for each generation based on the rules of Conway's Game of Life.
+Parameters:
+frameNum: The current frame number of the animation (unused in the function).
+img: The image object representing the grid plot.
+grid: The NumPy array representing the current state of the grid.
+Returns:
+The updated image object -> img
+It computes the next state of the grid based on the rules of Conway's Game of Life, which includes counting the neighbors of each cell and applying the rules to determine whether a cell lives, dies, or becomes alive.
+The updated grid is then assigned to the image object img, and the function returns it.
+'''
 
 # Function to update the grid for each generation
 def update_grid(frameNum, img, grid):
