@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+from matplotlib.animation import FuncAnimation
 
 # Function to initialize the grid with random initial state
 def initialize_grid(rows, cols):
@@ -28,15 +28,20 @@ def update_grid(frameNum, img, grid):
     grid[:] = newGrid[:]
     return img,
 
-# Initialize grid size
-rows, cols = 50, 50
+def main():
+    # Initialize grid size
+    global rows, cols
+    rows, cols = 50, 50
 
-# Create initial random grid
-grid = initialize_grid(rows, cols)
+    # Create initial random grid
+    grid = initialize_grid(rows, cols)
 
-# Create the animation
-fig, ax = plt.subplots()
-img = ax.imshow(grid, interpolation='nearest')
-ani = animation.FuncAnimation(fig, update_grid, fargs=(img, grid), frames=100, interval=100, blit=True)
+    # Create the animation
+    fig, ax = plt.subplots()
+    img = ax.imshow(grid, interpolation='nearest')
+    ani = FuncAnimation(fig, update_grid, fargs=(img, grid), frames=100, interval=100, blit=True)
 
-plt.show()
+    plt.show()
+
+if __name__ == "__main__":
+    main()
