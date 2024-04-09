@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+from matplotlib.animation import FuncAnimation
 
 # Function to initialize the grid with random initial state
 def initialize_grid(rows, cols):
@@ -26,18 +26,26 @@ def update_grid(grid):
 
 # Function to count live neighboring cells using recursion
 def count_neighbors(grid, i, j, rows, cols):
-    if i < 0 or j < 0 or i >= rows or j >= cols:
-        return 0
-    if grid[i, j] == 1:
-        return 1
-    return (count_neighbors(grid, i-1, j, rows, cols) +
-            count_neighbors(grid, i+1, j, rows, cols) +
-            count_neighbors(grid, i, j-1, rows, cols) +
-            count_neighbors(grid, i, j+1, rows, cols) +
-            count_neighbors(grid, i-1, j-1, rows, cols) +
-            count_neighbors(grid, i-1, j+1, rows, cols) +
-            count_neighbors(grid, i+1, j-1, rows, cols) +
-            count_neighbors(grid, i+1, j+1, rows, cols))
+    def count_neighbors_recursive(grid, current_i, current_j, rows, cols, offsets):
+        if not offsets:
+            return 0
+        
+        di, dj = offsets[0]
+        ni,  nj = current_i + di, current_j + dj
+
+        # Skip out of bounds neighbors by not counting them
+        if ni < 0 or nj < 0 or ni >= rows or nj >= cols:
+            return count_neighbors_recursive(grid,current_i, current_j, rows, cols, offsets[1:])
+        
+        # Add current neighbor cell to count
+        result = grid[ni,nj] + count_neighbors_recursive(grid,current_i, current_j, rows, cols, offsets[1:])
+        return result
+
+    # Define offsets for neighboring cells
+    neighbor_offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+
+    # Start recursive neighbor count for each cell with initial offset
+    return count_neighbors_recursive(grid, i, j, rows, cols, neighbor_offsets)
 
 # Function to calculate the GCD using Euclidean algorithm
 def gcd(a, b):
@@ -57,11 +65,15 @@ def simulate_game(rows, cols, frames):
         img.set_array(grid)
         return img,
 
-    ani = animation.FuncAnimation(fig, animate, frames=frames, interval=100, blit=True)
+    ani = FuncAnimation(fig, animate, frames=frames, interval=100, blit=True)
     plt.show()
 
-# Initialize grid size
-rows, cols = 50, 50
+def main():
+    # Initialize grid size
+    rows, cols = 50, 50
 
-# Simulate Conway's Game of Life
-simulate_game(rows, cols, frames=100)
+    # Simulate Conway's Game of Life
+    simulate_game(rows, cols, frames=100)
+
+if __name__ == "__main__":
+    main()
