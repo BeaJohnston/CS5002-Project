@@ -65,25 +65,25 @@ def count_neighbors(grid, i, j, rows, cols):
     The count of live neighboring cells is returned recursively.
     '''
     def count_neighbors_recursive(grid, current_i, current_j, rows, cols, offsets):
-    '''
-    This is a helper function used by the count_neighbors() function to recursively count the live neighboring cells of a specified cell (current_i, current_j) in the grid.
-    Parameters:
-    grid: The current state of the grid represented as a NumPy array.
-    current_i: The row index of the current cell for which neighbors are being counted.
-    current_j: The column index of the current cell for which neighbors are being counted.
-    rows: The total number of rows in the grid.
-    cols: The total number of columns in the grid.
-    offsets: A list of tuples representing the offsets for neighboring cells.
-    Returns:
-    The count of live neighboring cells for the specified cell (current_i, current_j).
-    Description:
-    This function is designed to be called recursively within the count_neighbors() function for each neighboring cell of the current cell.
-    It first checks if the offsets list is empty. If so, it returns 0, indicating no live neighboring cells were found.
-    Otherwise, it takes the first offset tuple from the offsets list and calculates the row and column indices of the neighboring cell based on the current cell's indices (current_i and current_j).
-    If the neighboring cell is within the bounds of the grid, it adds the value of that cell to the result and recursively calls itself with the remaining offsets in the list.
-    If the neighboring cell is out of bounds, it skips counting that cell and continues with the next offset in the list.
-    Finally, it returns the sum of the values of all live neighboring cells counted recursively.
-    '''
+        '''
+        This is a helper function used by the count_neighbors() function to recursively count the live neighboring cells of a specified cell (current_i, current_j) in the grid.
+        Parameters:
+        grid: The current state of the grid represented as a NumPy array.
+        current_i: The row index of the current cell for which neighbors are being counted.
+        current_j: The column index of the current cell for which neighbors are being counted.
+        rows: The total number of rows in the grid.
+        cols: The total number of columns in the grid.
+        offsets: A list of tuples representing the offsets for neighboring cells.
+        Returns:
+        The count of live neighboring cells for the specified cell (current_i, current_j).
+        Description:
+        This function is designed to be called recursively within the count_neighbors() function for each neighboring cell of the current cell.
+        It first checks if the offsets list is empty. If so, it returns 0, indicating no live neighboring cells were found.
+        Otherwise, it takes the first offset tuple from the offsets list and calculates the row and column indices of the neighboring cell based on the current cell's indices (current_i and current_j).
+        If the neighboring cell is within the bounds of the grid, it adds the value of that cell to the result and recursively calls itself with the remaining offsets in the list.
+        If the neighboring cell is out of bounds, it skips counting that cell and continues with the next offset in the list.
+        Finally, it returns the sum of the values of all live neighboring cells counted recursively.
+        '''
         if not offsets:
             return 0
         
@@ -133,25 +133,25 @@ def simulate_game(rows, cols, frames):
     Defines an animate() function that updates the grid for each frame of the animation by calling update_grid() and updates the image accordingly.
     Uses FuncAnimation to animate the changes in the grid for a specified number of frames.
     The animation is displayed using plt.show()
+    '''
     grid = initialize_grid(rows, cols)
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
-    '''
 
     def animate(frameNum):
-    '''
-    This function is responsible for updating the grid and the corresponding image for each frame of the animation.
-    Parameters:    
-    frameNum: The current frame number of the animation.
-    Returns:
-    The updated image object.
-    Description:
-    The function is defined within the simulate_game() function scope to encapsulate the animation logic.
-    It takes the current frame number as input but doesn't directly use it. Instead, it updates the grid variable from the outer scope.
-    Inside the function, it updates the grid by calling the update_grid() function, which computes the next generation of the game grid based on the rules of Conway's Game of Life.
-    After updating the grid, it sets the updated grid as the data for the image object img using set_array().
-    Finally, it returns the updated image object. This is necessary for the FuncAnimation to know which parts of the plot need to be updated for each frame.
-    '''
+        '''
+        This function is responsible for updating the grid and the corresponding image for each frame of the animation.
+        Parameters:    
+        frameNum: The current frame number of the animation.
+        Returns:
+        The updated image object.
+        Description:
+        The function is defined within the simulate_game() function scope to encapsulate the animation logic.
+        It takes the current frame number as input but doesn't directly use it. Instead, it updates the grid variable from the outer scope.
+        Inside the function, it updates the grid by calling the update_grid() function, which computes the next generation of the game grid based on the rules of Conway's Game of Life.
+        After updating the grid, it sets the updated grid as the data for the image object img using set_array().
+        Finally, it returns the updated image object. This is necessary for the FuncAnimation to know which parts of the plot need to be updated for each frame.
+        '''
         nonlocal grid
         grid = update_grid(grid)
         img.set_array(grid)
